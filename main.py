@@ -7,7 +7,12 @@ import uuid
 app = Flask(__name__)
 
 
-@app.post('/')
+@app.get('/')
+def testApi():
+    return 'Hello World!'
+
+
+@app.post('/product-recognition')
 def helloWorld():
     my_uuid = uuid.uuid4()
 
@@ -32,7 +37,7 @@ def restoreFolder():
         except Exception as e:
             print('Failed to delete %s. Reason: %s' % (file_path, e))
 
-    return 'Restored'        
+    return 'Restored'
 
 
 if __name__ == '__main__':
