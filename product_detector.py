@@ -1,6 +1,7 @@
 from PIL import Image, ImageOps
 import tensorflow
 import numpy as np
+import re
 
 
 class ProductDetector():
@@ -60,10 +61,13 @@ class ProductDetector():
         return self.getProductName(list.index(prediction_list, max_value))
 
     # Get product name by index in prediction_list
-    def getProductName(self, productIndex):
-        if productIndex == 0:
-            return 'Coca-Cola'
-        elif productIndex == 1:
-            return 'Fanta'
-        elif productIndex == 2:
-            return 'Nutella'
+    def getProductName(self, max_value_index):
+        labels = self.loadLabels('./assets/labels.txt')
+        return labels[max_value_index]
+
+    # This function parses the labels.txt and puts it in a python dictionary
+    def loadLabels(self, labelPath):
+        p = re.compile(r'\s*(\d+)(.+)')
+        with open(labelPath, 'r', encoding='utf-8') as labelFile:
+            lines = (p.match(line).groups() for line in labelFile.readlines())
+            return {int(num): text.strip() for num, text in lines}

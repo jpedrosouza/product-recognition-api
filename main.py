@@ -16,6 +16,8 @@ def testApi():
 def helloWorld():
     my_uuid = uuid.uuid4()
 
+    print(f'Images {request.files}')
+
     file = request.files['product_image']
     file.save(f'tmp/{my_uuid}')
 
@@ -41,4 +43,4 @@ def restoreFolder():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=True, port=80)
